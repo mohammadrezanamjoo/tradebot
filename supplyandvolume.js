@@ -61,6 +61,15 @@ function calculateStopLossOrder(priceData) {
 }
 
 
+function getPriceArrayData() {
+  var priceData = [];
+  for (var i = 0; i < 100; i++) {
+    var price = Math.random() * 100;
+    priceData.push(price);
+  }
+  return priceData;
+}
+
 
 function supplyAndDemandTradingStrategy(priceData) {
   // 1. Identify an area of equilibrium on the price chart.
