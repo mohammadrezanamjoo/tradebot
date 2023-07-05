@@ -1,3 +1,67 @@
+function calculateMovingAverage(priceData) {
+  var movingAverage = [];
+  for (var i = 0; i < priceData.length; i++) {
+    var sum = 0;
+    for (var j = i - 10; j <= i; j++) {
+      sum += priceData[j];
+    }
+    movingAverage.push(sum / 10);
+  }
+  return movingAverage;
+}
+
+function calculateBollingerBands(priceData) {
+  var movingAverage = calculateMovingAverage(priceData);
+  var standardDeviation = calculateStandardDeviation(priceData);
+
+  var upperBand = movingAverage + 2 * standardDeviation;
+  var lowerBand = movingAverage - 2 * standardDeviation;
+
+  return {
+    upperBand: upperBand,
+    lowerBand: lowerBand
+  };
+}
+
+function calculateVolumeIndicator(priceData) {
+  var volumeIndicator = [];
+  for (var i = 0; i < priceData.length; i++) {
+    var volume = priceData[i].volume;
+    volumeIndicator.push(volume);
+  }
+  return volumeIndicator;
+}
+function calculateSupportLevel(priceData) {
+  var supportLevel = priceData[0];
+  for (var i = 1; i < priceData.length; i++) {
+    if (priceData[i] < supportLevel) {
+      supportLevel = priceData[i];
+    }
+  }
+  return supportLevel;
+}
+function calculateResistanceLevel(priceData) {
+  var resistanceLevel = priceData[0];
+  for (var i = 1; i < priceData.length; i++) {
+    if (priceData[i] > resistanceLevel) {
+      resistanceLevel = priceData[i];
+    }
+  }
+  return resistanceLevel;
+}
+
+function calculateStopLossOrder(priceData) {
+  var stopLossOrder = priceData[0];
+  for (var i = 1; i < priceData.length; i++) {
+    if (priceData[i] < stopLossOrder) {
+      stopLossOrder = priceData[i];
+    }
+  }
+  return stopLossOrder;
+}
+
+
+
 function supplyAndDemandTradingStrategy(priceData) {
   // 1. Identify an area of equilibrium on the price chart.
   var movingAverage = calculateMovingAverage(priceData);
