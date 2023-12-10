@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="cryptoChart" width="800" height="400"></canvas>
+
+  <script>
+    
+const crypto1Data = [100, 110, 120, 130, 140, 130, 120, 110, 100, 90];
+const crypto2Data = [80, 85, 90, 95, 100, 110, 120, 130, 140, 150];
+const labels = ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05', '2023-01-06', '2023-01-07', '2023-01-08', '2023-01-09', '2023-01-10'];
+
+
+    // Function to create a line chart
+    function createChart() {
+      const ctx = document.getElementById('cryptoChart').getContext('2d');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Crypto 1',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              data: crypto1Data,
+              fill: false,
+            },
+            {
+              label: 'Crypto 2',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              data: crypto2Data,
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: [{
+              type: 'linear',
+              position: 'bottom',
+            }],
+          },
+        },
+      });
+    }
+
+    // Call the function to create the chart
+    createChart();
+  </script>
+</body>
+</html>
