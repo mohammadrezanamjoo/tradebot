@@ -27,4 +27,4 @@ async function backtestCrypto(symbol, startDate, endDate, investment) {
   console.log(`Average return: ${averageReturn.toFixed(2)}%`);
 }
 
-backtestCrypto('BTC', '2021-01-01', '2022-01-01', 1000);
+backtestCrypto('BTC', '2022-01-01', '2023-01-01', 1000);
