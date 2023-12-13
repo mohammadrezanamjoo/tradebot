@@ -13,7 +13,7 @@ async function findMostTrendingCrypto() {
     const url = new URL(apiUrl);
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
-    // Fetch data from the CoinGecko API
+
     const response = await fetch(url);
     const data = await response.json();
 
