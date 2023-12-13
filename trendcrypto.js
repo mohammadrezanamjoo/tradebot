@@ -9,7 +9,7 @@ async function findMostTrendingCrypto() {
   };
 
   try {
-    // Construct the URL with query parameters
+
     const url = new URL(apiUrl);
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
