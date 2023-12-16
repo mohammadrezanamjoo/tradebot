@@ -1,5 +1,3 @@
-// Sample code to calculate 5 common indicators for the crypto market
-
 const priceData = [100, 105, 110, 95, 120, 115, 125, 130, 140, 135, 130, 125];
 
 // Simple Moving Average (SMA)
