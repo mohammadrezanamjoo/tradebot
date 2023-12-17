@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const startDate = '2019-01-01'; // start date of the historical data
+const startDate = '2019-01-01';
 const endDate = '2023-07-11'; // end date of the historical data
 const currency = 'BTC'; // cryptocurrency symbol
 
