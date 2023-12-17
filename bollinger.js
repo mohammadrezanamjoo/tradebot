@@ -9,7 +9,7 @@ function priceActionStrategy(prices, period, deviation) {
     throw new Error('Invalid input: period value must be a positive integer');
   }
 
-  // Ensure that the deviation value is a positive number
+  
   if (typeof deviation !== 'number' || deviation <= 0) {
     throw new Error('Invalid input: deviation value must be a positive number');
   }
