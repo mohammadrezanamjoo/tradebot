@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 const startDate = '2019-01-01';
-const endDate = '2023-07-11'; // end date of the historical data
+const endDate = '2023-07-11'; 
 const currency = 'BTC'; // cryptocurrency symbol
 
 const url = `https://api.coinbase.com/v2/prices/${currency}-USD/spot?start=${startDate}&end=${endDate}`;
