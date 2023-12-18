@@ -79,7 +79,6 @@ function supplyAndDemandTradingStrategy(priceData) {
   var supportLevel = calculateSupportLevel(priceData);
   var resistanceLevel = calculateResistanceLevel(priceData);
 
-  // 3. Place a buy order if the price breaks above the resistance level or a sell order if the price breaks below the support level.
   if (priceData[i] > resistanceLevel) {
     placeBuyOrder();
   } else if (priceData[i] < supportLevel) {
