@@ -76,7 +76,6 @@ function supplyAndDemandTradingStrategy(priceData) {
   var bollingerBands = calculateBollingerBands(priceData);
   var volumeIndicator = calculateVolumeIndicator(priceData);
 
-  // 2. Wait for a breakout from the area of equilibrium.
   var supportLevel = calculateSupportLevel(priceData);
   var resistanceLevel = calculateResistanceLevel(priceData);
 
