@@ -72,7 +72,6 @@ function getPriceArrayData() {
 
 
 function supplyAndDemandTradingStrategy(priceData) {
-  // 1. Identify an area of equilibrium on the price chart.
   var movingAverage = calculateMovingAverage(priceData);
   var bollingerBands = calculateBollingerBands(priceData);
   var volumeIndicator = calculateVolumeIndicator(priceData);
