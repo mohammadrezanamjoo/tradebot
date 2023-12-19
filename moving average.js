@@ -1,5 +1,4 @@
 function priceActionStrategy(prices, period1, period2) {
-  // Ensure that the price data is an array
   if (!Array.isArray(prices)) {
     throw new Error('Invalid input: prices must be an array');
   }
