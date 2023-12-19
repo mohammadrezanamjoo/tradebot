@@ -8,7 +8,6 @@ function priceActionStrategy(prices, period1, period2) {
     throw new Error('Invalid input: period values must be positive integers');
   }
 
-  // Calculate the moving averages
   const sma1 = simpleMovingAverage(prices, period1);
   const sma2 = simpleMovingAverage(prices, period2);
 
