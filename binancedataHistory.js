@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 const symbol = 'BTCUSDT'; // trading pair symbol
-const interval = '1d'; // time interval (1 day)
+const interval = '1d'; 
 const limit = 1000; 
 const startTime = new Date('2019-01-01').getTime();
 const endTime = new Date('2023-07-11').getTime(); 
