@@ -4,7 +4,7 @@ const symbol = 'BTCUSDT'; // trading pair symbol
 const interval = '1d'; // time interval (1 day)
 const limit = 1000; // max number of data points to retrieve
 const startTime = new Date('2019-01-01').getTime(); // start time in milliseconds
-const endTime = new Date('2023-07-11').getTime(); // end time in milliseconds
+const endTime = new Date('2023-07-11').getTime(); 
 
 const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}&startTime=${startTime}&endTime=${endTime}`;
 
