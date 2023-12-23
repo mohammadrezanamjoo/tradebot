@@ -12,7 +12,6 @@ fetch(url, {
 })
   .then(response => response.json())
   .then(data => {
-    // Handle the data here
     console.log(data);
   })
   .catch(error => {
