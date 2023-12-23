@@ -2,7 +2,7 @@ const apiUrl = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/lat
 
 const url = new URL(apiUrl);
 url.searchParams.append('start','1');
-url.searchParams.append('limit','10'); // You can adjust the limit based on your requirements
+url.searchParams.append('limit','10');
 
 fetch(url, {
   headers: {
