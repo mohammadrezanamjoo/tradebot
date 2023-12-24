@@ -26,7 +26,6 @@ function priceActionStrategy(prices, period, rsiThreshold) {
 }
 
 function relativeStrengthIndex(prices, period) {
-  // Ensure that the price data is an array
   if (!Array.isArray(prices)) {
     throw new Error('Invalid input: prices must be an array');
   }
