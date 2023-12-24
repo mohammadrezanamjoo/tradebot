@@ -12,7 +12,6 @@ function priceActionStrategy(prices, period, rsiThreshold) {
     throw new Error('Invalid input: RSI threshold value must be between 0 and 100');
   }
 
-  // Calculate the RSI
   const rsi = relativeStrengthIndex(prices, period);
 
   // Determine the trading signal based on the RSI value
