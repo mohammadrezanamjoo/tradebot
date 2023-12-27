@@ -24,7 +24,6 @@ function determineTrend(smaShort, smaLong) {
   }
 }
 
-// Define the period for short-term and long-term SMAs
 const shortTermPeriod = 5;
 const longTermPeriod = 10;
 
