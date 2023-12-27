@@ -1,7 +1,6 @@
 // Sample price data
 const priceData = [100, 110, 120, 115, 130, 140, 135, 150, 160, 155];
 
-// Calculate the simple moving average (SMA) for a given period
 function calculateSMA(data, period) {
   const sma = [];
   for (let i = period - 1; i < data.length; i++) {
