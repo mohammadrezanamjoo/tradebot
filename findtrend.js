@@ -11,7 +11,6 @@ function calculateSMA(data, period) {
   return sma;
 }
 
-// Determine the trend based on the moving average crossover
 function determineTrend(smaShort, smaLong) {
   const lastShort = smaShort[smaShort.length - 1];
   const lastLong = smaLong[smaLong.length - 1];
