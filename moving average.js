@@ -24,7 +24,6 @@ function simpleMovingAverage(prices, period) {
     throw new Error('Invalid input: prices must be an array');
   }
 
-  // Ensure that the period value is a positive integer
   if (!Number.isInteger(period) || period <= 0) {
     throw new Error('Invalid input: period value must be a positive integer');
   }
