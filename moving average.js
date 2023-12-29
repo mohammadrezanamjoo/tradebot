@@ -28,7 +28,6 @@ function simpleMovingAverage(prices, period) {
     throw new Error('Invalid input: period value must be a positive integer');
   }
 
-  // Calculate the simple moving average
   const sma = [];
   for (let i = period - 1; i < prices.length; i++) {
     const sum = prices.slice(i - period + 1, i + 1).reduce((a, b) => a + b, 0);
