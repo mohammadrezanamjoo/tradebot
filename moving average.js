@@ -9,7 +9,7 @@ function priceActionStrategy(prices, period1, period2) {
   const sma1 = simpleMovingAverage(prices, period1);
   const sma2 = simpleMovingAverage(prices, period2);
 
-  // Determine the trading signal based on the moving average crossover
+
   if (sma1[sma1.length - 1] > sma2[sma2.length - 1] && sma1[sma1.length - 2] <= sma2[sma2.length - 2]) {
     return { signal: 'BUY', price: prices[prices.length - 1] };
   } else if (sma1[sma1.length - 1] < sma2[sma2.length - 1] && sma1[sma1.length - 2] >= sma2[sma2.length - 2]) {
