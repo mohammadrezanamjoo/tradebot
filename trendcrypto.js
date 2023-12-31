@@ -17,7 +17,7 @@ async function findMostTrendingCrypto() {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Check if any data is available
+
     if (data.length > 0) {
       const mostTrendingCrypto = data[0];
       console.log('Most trending cryptocurrency:', mostTrendingCrypto.name);
