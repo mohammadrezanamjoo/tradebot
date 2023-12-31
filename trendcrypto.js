@@ -22,7 +22,7 @@ async function findMostTrendingCrypto() {
       const mostTrendingCrypto = data[0];
       console.log('Most trending cryptocurrency:', mostTrendingCrypto.name);
     } else {
-      console.log('No trending cryptocurrencies found.');
+      console.log('No trending cryptocurrencies found...');
     }
 
   } catch (error) {
