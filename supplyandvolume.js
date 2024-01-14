@@ -73,7 +73,8 @@ function getPriceArrayData() {
 
 
 function supplyAndDemandTradingStrategy(priceData) {
-  var movingAverage = calculateMovingAverage(priceData);
+  var movingAverage =
+    calculateMovingAverage(priceData);
   var bollingerBands = calculateBollingerBands(priceData);
   var volumeIndicator = calculateVolumeIndicator(priceData);
 
