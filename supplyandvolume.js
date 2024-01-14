@@ -77,7 +77,8 @@ function supplyAndDemandTradingStrategy(priceData) {
   var volumeIndicator = calculateVolumeIndicator(priceData);
 
   var supportLevel = calculateSupportLevel(priceData);
-  var resistanceLevel = calculateResistanceLevel(priceData);
+  var resistanceLevel =
+    calculateResistanceLevel(priceData);
 
   if (priceData[i] > resistanceLevel) {
     placeBuyOrder();
