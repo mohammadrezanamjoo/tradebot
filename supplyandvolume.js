@@ -3,7 +3,8 @@ function calculateMovingAverage(priceData) {
   for (var i = 0; i < priceData.length; i++) {
     var sum = 0;
     for (var j = i - 10; j <= i; j++) {
-      sum += priceData[j];
+      sum +=
+        priceData[j];
     }
     movingAverage.push(sum / 10);
   }
