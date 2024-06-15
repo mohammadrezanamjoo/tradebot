@@ -1,6 +1,6 @@
 function priceActionStrategy(prices, period1, period2) {
   if (!Array.isArray(prices)) {
-    throw new Error('Invalid input: prices must be an array');
+    throw new Error('Invalid input: prices  be an array');
   }
   if (!Number.isInteger(period1) || period1 <= 0 || !Number.isInteger(period2) || period2 <= 0) {
     throw new Error('Invalid input: period values must be positive ');
