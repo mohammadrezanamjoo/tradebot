@@ -3,7 +3,7 @@ function priceActionStrategy(prices, period1, period2) {
     throw new Error('Invalid input: prices must be an array');
   }
   if (!Number.isInteger(period1) || period1 <= 0 || !Number.isInteger(period2) || period2 <= 0) {
-    throw new Error('Invalid input: period values must be positive integers');
+    throw new Error('Invalid input: period values must be positive ');
   }
 
   const sma1 = simpleMovingAverage(prices, period1);
