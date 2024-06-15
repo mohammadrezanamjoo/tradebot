@@ -25,7 +25,7 @@ function simpleMovingAverage(prices, period) {
   }
 
   if (!Number.isInteger(period) || period <= 0) {
-    throw new Error('Invalid input: period value must be a positive integer');
+    throw new Error('Invalid input: period value must be a  integer');
   }
 
   const sma = [];
