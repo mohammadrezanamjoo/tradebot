@@ -23,7 +23,7 @@ async function backtestCrypto(symbol, startDate, endDate, investment)
     totalReturn += returnPercentage;
   }
 
-  const averageReturn = totalReturn / data.length;
+  const averageReturn = totalReturn  / data.length;
 
   console.log(`Backtested ${symbol} from ${startDate} to ${endDate} with ${investment} USD investment`);
   console.log(`Average return: ${averageReturn.toFixed(2)}%`);
