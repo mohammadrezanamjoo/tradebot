@@ -2,7 +2,8 @@ const fetch = require('node-fetch');
 
 const API_URL = 'https://api.pro.coinbase.com';
 
-async function backtestCrypto(symbol, startDate, endDate, investment) {
+async function backtestCrypto(symbol, startDate, endDate, investment)
+  {
   const startTimestamp = Math.floor(new Date(startDate).getTime() / 1000);
   const endTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
   const granularity = 86400;
