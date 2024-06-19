@@ -5,7 +5,7 @@ const API_URL = 'https://api.pro.coinbase.com';
 async function backtestCrypto(symbol, startDate, endDate, investment) {
   const startTimestamp = Math.floor(new Date(startDate).getTime() / 1000);
   const endTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
-  const granularity = 86400; // 1 day
+  const granularity = 86400;
 
   const response = await fetch(`${API_URL}/products/${symbol}-USD/candles?start=${startTimestamp}&end=${endTimestamp}&granularity=${granularity}`);
   const data = await response.json();
