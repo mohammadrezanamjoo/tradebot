@@ -13,7 +13,8 @@ async function backtestCrypto(symbol, startDate, endDate, investment)
 
   let totalReturn = 0;
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++)
+    {
     const closePrice = data[i][4];
     const numCoins = investment / closePrice;
     const currentValue = numCoins * closePrice;
