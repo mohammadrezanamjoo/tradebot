@@ -8,7 +8,7 @@ async function backtestCrypto(symbol, startDate, endDate, investment)
   const endTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
   const granularity = 86400;
 
-  const response = await fetch(`${API_URL}/products/${symbol}-USD/candles?start=${startTimestamp}&end=${endTimestamp}&granularity=${granularity}`);
+  const response = await fetch (`${API_URL}/products/${symbol}-USD/candles?start=${startTimestamp}&end=${endTimestamp}&granularity=${granularity}`);
   const data = await response.json();
 
   let totalReturn = 0;
