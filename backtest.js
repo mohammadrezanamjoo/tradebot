@@ -25,7 +25,7 @@ async function backtestCrypto(symbol, startDate, endDate, investment)
 
   const averageReturn = totalReturn  / data.length;
 
-  console.log(`Backtested ${symbol} from ${startDate} to ${endDate} with ${investment} USD investment`);
+  console.log(`Backtested  ${symbol} from ${startDate} to ${endDate} with ${investment} USD investment`);
   console.log(`Average return: ${averageReturn.toFixed(2)}%`);
 }
 
