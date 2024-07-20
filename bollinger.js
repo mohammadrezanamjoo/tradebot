@@ -12,7 +12,6 @@ function priceActionStrategy(prices, period, deviation) {
     throw new Error('Invalid input: deviation value must be a positive number');
   }
 
-  // Calculate the Bollinger Bands
   const sma = simpleMovingAverage(prices, period);
   const stdDev = standardDeviation(prices, period);
   const upperBand = sma.map((price, index) => price + deviation * stdDev[index]);
