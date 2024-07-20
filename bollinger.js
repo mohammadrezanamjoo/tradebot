@@ -17,7 +17,6 @@ function priceActionStrategy(prices, period, deviation) {
   const upperBand = sma.map((price, index) => price + deviation * stdDev[index]);
   const lowerBand = sma.map((price, index) => price - deviation * stdDev[index]);
 
-  // Determine the trading signal based on the price position relative to the Bollinger Bands
   const lastPrice = prices[prices.length - 1];
   const lastUpperBand = upperBand[upperBand.length - 1];
   const lastLowerBand = lowerBand[lowerBand.length - 1];
