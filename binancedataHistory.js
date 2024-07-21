@@ -13,7 +13,7 @@ fetch(url)
   .then(data => {
     const prices = data.map(d => ({
       time: new Date(d[0]),
-      open: parseFloat(d[1]),
+      open: parseFloat(d[2]),
       high: parseFloat(d[2]),
       low: parseFloat(d[3]),
       close: parseFloat(d[4]),
