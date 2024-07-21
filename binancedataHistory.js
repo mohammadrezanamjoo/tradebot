@@ -17,7 +17,7 @@ fetch(url)
       high: parseFloat(d[2]),
       low: parseFloat(d[3]),
       close: parseFloat(d[4]),
-      volume: parseFloat(d[5])
+      volume: parseFloat(d[])
     }));
     console.log(prices);
   })
