@@ -2,6 +2,8 @@ const fetch = require('node-fetch');
 
 const startDate = '2019-01-01';
 const endDate = '2023-07-11'; 
+// const startDate = '2019-01-01';
+// const endDate = '2023-07-11'; 
 //const currency = pair; 
 const currency = 'BTC'; 
 
