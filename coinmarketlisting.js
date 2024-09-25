@@ -1,6 +1,7 @@
 const apiUrl = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
 
 const url = new URL(apiUrl);
+
 url.searchParams.append('start','1');
 url.searchParams.append('limit','10');
 
