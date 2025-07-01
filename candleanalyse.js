@@ -9,7 +9,7 @@ async function getCandles(symbol, interval, limit = 100) {
   }
   const rawData = await response.json();
 
-  // Map raw array to objects with numeric
+  // Map raw array to objects with
   return rawData.map(c => ({
     openTime: new Date(c[0]),
     open:  parseFloat(c[1]),
