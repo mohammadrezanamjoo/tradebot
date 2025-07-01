@@ -20,7 +20,6 @@ async function getCandles(symbol, interval, limit = 100) {
   }));
 }
 
-// 2. Compute basic analytics
 function analyze(candles) {
   const closes = candles.map(c => c.close);
   const opens  = candles.map(c => c.open);
