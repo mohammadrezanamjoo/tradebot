@@ -209,7 +209,6 @@ plt.ylabel("Equity")
 plt.tight_layout()
 plt.show()
 
-# Save example code to a file for user (optional)
 code_text = """# Save this file as simple_backtester.py and run locally.
 # (The same code that's executed in the notebook.)
 # ... (omitted here to keep output concise) ...
