@@ -1,0 +1,222 @@
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+
+# Utility to display DataFrame to user (as requested by python_user_visible tool instructions)
+from caas_jupyter_tools import display_dataframe_to_user
+
+class Backtester:
+    def __init__(self, data, initial_capital=100000, commission=0.0, slippage=0.0):
+        """
+        data: pandas DataFrame with index as datetime and columns ['open','high','low','close','volume']
+        initial_capital: starting cash
+        commission: fixed commission per trade (absolute, not percentage)
+        slippage: assumed slippage per trade in price units (absolute)
+        """
+        self.data = data.copy().sort_index()
+        self.capital = initial_capital
+        self.initial_capital = initial_capital
+        self.commission = commission
+        self.slippage = slippage
+        self.positions = pd.Series(index=self.data.index, dtype=float)  # position size in units (positive for long)
+        self.position_pct = pd.Series(0.0, index=self.data.index)  # fraction of equity risked/used (optional)
+        self.equity = pd.Series(index=self.data.index, dtype=float)
+        self.equity.iloc[0] = initial_capital
+        self.trades = []  # list of trade dicts
+
+    def run(self, signals, size_func=None):
+        """
+        signals: Series aligned with data.index containing 1 for long, 0 for flat.
+                 (This is a simple long-only example.)
+        size_func: optional function(signature (capital, price, signal, date_index) -> units) to size trades
+        """
+        assert signals.index.equals(self.data.index), "signals index must match data index"
+        price_col = 'close'
+        position = 0.0
+        cash = self.initial_capital
+        units = 0.0
+        last_price = np.nan
+
+        for i, dt in enumerate(self.data.index):
+            price = self.data.loc[dt, price_col]
+            sig = float(signals.loc[dt])
+
+            # On signal change, act at next open price (simulated). Here we take today's open.
+            current_open = self.data.loc[dt, 'open']
+
+            # Entry: signal goes from 0 to 1 -> buy
+            if sig == 1 and position == 0:
+                # determine units
+                if size_func:
+                    units = size_func(cash, current_open, sig, dt)
+                else:
+                    # default: allocate 10% of capital
+                    alloc = 0.10
+                    units = (cash * alloc) // current_open
+                if units > 0:
+                    executed_price = current_open + self.slippage
+                    cost = executed_price * units + self.commission
+                    if cost <= cash + 1e-9:
+                        cash -= cost
+                        position = 1
+                        entry = {
+                            'entry_date': dt,
+                            'entry_price': executed_price,
+                            'units': units,
+                            'exit_date': None,
+                            'exit_price': None,
+                            'pnl': None
+                        }
+                        self.trades.append(entry)
+
+            # Exit: signal goes from 1 to 0 -> sell all
+            elif sig == 0 and position == 1:
+                executed_price = current_open - self.slippage
+                # sell all units from last trade
+                last_trade = self.trades[-1]
+                units_to_sell = last_trade['units']
+                proceeds = executed_price * units_to_sell - self.commission
+                cash += proceeds
+                position = 0
+                last_trade['exit_date'] = dt
+                last_trade['exit_price'] = executed_price
+                last_trade['pnl'] = (executed_price - last_trade['entry_price']) * units_to_sell - 2*self.commission
+
+            # update mark-to-market equity: cash + position * close
+            mtm = cash
+            if position == 1:
+                mtm += self.trades[-1]['units'] * price
+            self.equity.iloc[i] = mtm
+            last_price = price
+
+        # fill forward equity if any NaN
+        self.equity.fillna(method='ffill', inplace=True)
+        self.data['equity'] = self.equity
+        self._prepare_trades_df()
+        return self.trades_df
+
+    def _prepare_trades_df(self):
+        self.trades_df = pd.DataFrame(self.trades)
+        if not self.trades_df.empty:
+            self.trades_df['entry_date'] = pd.to_datetime(self.trades_df['entry_date'])
+            self.trades_df['exit_date'] = pd.to_datetime(self.trades_df['exit_date'])
+            self.trades_df.set_index('entry_date', inplace=True)
+
+    def performance(self):
+        eq = self.equity.dropna()
+        returns = eq.pct_change().fillna(0)
+        total_return = eq.iloc[-1] / eq.iloc[0] - 1
+        days = (eq.index[-1] - eq.index[0]).days
+        if days > 0:
+            cagr = (1 + total_return) ** (365.0/days) - 1
+        else:
+            cagr = np.nan
+        # max drawdown
+        cummax = eq.cummax()
+        drawdown = (eq - cummax) / cummax
+        max_dd = drawdown.min()
+        # simple Sharpe (assume 0 rf), use daily returns -> annualize by sqrt(252)
+        if returns.std() != 0:
+            sharpe = (returns.mean() / returns.std()) * np.sqrt(252)
+        else:
+            sharpe = np.nan
+        stats = {
+            'initial_capital': self.initial_capital,
+            'final_capital': float(eq.iloc[-1]) if len(eq)>0 else float(self.initial_capital),
+            'total_return': float(total_return),
+            'cagr': float(cagr),
+            'max_drawdown': float(max_dd),
+            'sharpe': float(sharpe),
+            'n_trades': len(self.trades_df) if hasattr(self, 'trades_df') else 0
+        }
+        return stats
+
+# ---- Example usage ----
+
+def generate_gbm(start_price=100.0, mu=0.0005, sigma=0.02, n_days=500, seed=42):
+    np.random.seed(seed)
+    dt = 1
+    returns = np.random.normal(loc=mu, scale=sigma, size=n_days)
+    price = start_price * np.exp(np.cumsum(returns))
+    dates = pd.bdate_range(end=pd.Timestamp.today(), periods=n_days)
+    df = pd.DataFrame(index=dates)
+    df['close'] = price
+    # make simplistic open/high/low from close
+    df['open'] = df['close'].shift(1).fillna(df['close'])
+    df['high'] = df[['open','close']].max(axis=1) * (1 + np.abs(np.random.normal(0, 0.003, size=n_days)))
+    df['low'] = df[['open','close']].min(axis=1) * (1 - np.abs(np.random.normal(0, 0.003, size=n_days)))
+    df['volume'] = (np.random.rand(n_days) * 1000).astype(int)
+    return df
+
+# Simple SMA crossover signals: 20 vs 50 day
+def sma_crossover_signals(df, fast=20, slow=50):
+    close = df['close']
+    sma_fast = close.rolling(fast).mean()
+    sma_slow = close.rolling(slow).mean()
+    signal = (sma_fast > sma_slow).astype(int)
+    signal = signal.fillna(0).astype(int)
+    return signal
+
+# Create synthetic data
+data = generate_gbm(n_days=500)
+
+# Build signals
+signals = sma_crossover_signals(data, fast=20, slow=50)
+
+# Instantiate and run backtester
+bt = Backtester(data, initial_capital=100000, commission=1.0, slippage=0.05)
+trades_df = bt.run(signals)
+
+# Show trades table (if any)
+if hasattr(bt, 'trades_df') and not bt.trades_df.empty:
+    display_dataframe_to_user("Trades", bt.trades_df.reset_index())
+else:
+    print("No trades were executed with the sample strategy on the synthetic data.")
+
+# Show equity series table
+eq_df = bt.data[['close','equity']].copy()
+display_dataframe_to_user("Equity and Price (sample)", eq_df.tail(20))
+
+# Print performance summary
+perf = bt.performance()
+print("\nPerformance summary:")
+for k,v in perf.items():
+    print(f"{k}: {v}")
+
+# Plot price with entry/exit markers
+plt.figure(figsize=(12,5))
+plt.plot(bt.data.index, bt.data['close'])
+# mark entries/exits
+if hasattr(bt, 'trades_df') and not bt.trades_df.empty:
+    for _, tr in bt.trades_df.iterrows():
+        # entry marker
+        plt.scatter([tr.name], [tr.entry_price], marker='^')
+        if not pd.isna(tr.exit_date):
+            plt.scatter([tr.exit_date], [tr.exit_price], marker='v')
+plt.title("Price with trade markers")
+plt.xlabel("Date")
+plt.ylabel("Price")
+plt.tight_layout()
+plt.show()
+
+# Plot equity curve
+plt.figure(figsize=(12,4))
+plt.plot(bt.data.index, bt.data['equity'])
+plt.title("Equity Curve")
+plt.xlabel("Date")
+plt.ylabel("Equity")
+plt.tight_layout()
+plt.show()
+
+# Save example code to a file for user (optional)
+code_text = """# Save this file as simple_backtester.py and run locally.
+# (The same code that's executed in the notebook.)
+# ... (omitted here to keep output concise) ...
+"""
+with open('/mnt/data/simple_backtester_example.txt', 'w') as f:
+    f.write("This file contains a minimal backtester example. For full code, copy from the notebook run output.")
+
+print("\\nA minimal example file was saved to /mnt/data/simple_backtester_example.txt")
+print("If you want the full single-file script saved as .py or a notebook, tell me and I'll create a downloadable file.")
+
