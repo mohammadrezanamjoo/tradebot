@@ -210,7 +210,7 @@ plt.tight_layout()
 plt.show()
 
 code_text = """# Save this file as simple_backtester.py and run locally.
-# (The same code that's executed in the notebook.)
+#(The same code that's executed in the notebook.)
 # ... (omitted here to keep output concise) ...
 """
 with open('/mnt/data/simple_backtester_example.txt', 'w') as f:
