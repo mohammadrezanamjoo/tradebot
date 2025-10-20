@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 
-# Utility to display DataFrame to user (as requested by python_user_visible tool instructions)
+# Utility to display DataFrame to user (as requested by python_user_visible tool instructions
 from caas_jupyter_tools import display_dataframe_to_user
 
 class Backtester:
