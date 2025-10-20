@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 
 # Utility to display DataFrame to user
-from caas_jupyter_tools import display_dataframe_to_user
+from caas_jupyter_tools import
 
 class Backtester:
     def __init__(self, data, initial_capital=100000, commission=0.0, slippage=0.0):
